@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Georgia DHS Document Digitization & Search Solution — Abdulla Al Noman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,900;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .case-hero{ padding: 44px 0 40px; border-bottom: 3px solid var(--ink); }
+  .back-link{
+    font-family: var(--mono); font-size: 12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em;
+    color: var(--ink-soft); text-decoration:none; display:inline-flex; align-items:center; gap:8px; margin-bottom: 24px;
+  }
+  .back-link:hover{ color: var(--accent); }
+  .case-title{
+    font-family: var(--display); font-weight:900; text-transform:uppercase;
+    font-size: clamp(32px, 5.5vw, 62px); line-height:0.95; letter-spacing:-0.01em; margin: 0 0 20px; max-width: 900px;
+  }
+  .case-meta{ display:flex; flex-wrap:wrap; gap: 10px; margin-bottom: 8px; }
+  .case-body{ padding: 56px 0; }
+  .case-body h2{
+    font-family: var(--display); font-weight:800; text-transform:uppercase; font-size: 22px;
+    margin: 44px 0 16px; border-bottom: 2px solid var(--ink); padding-bottom: 10px;
+  }
+  .case-body h2:first-child{ margin-top:0; }
+  .case-body p{ font-size: 15.5px; color: var(--ink-soft); max-width: 720px; margin: 0 0 16px; font-weight:500; line-height:1.65; }
+  .case-body ul{ max-width: 720px; padding-left: 20px; margin: 0 0 16px; }
+  .case-body li{ font-size: 15.5px; color: var(--ink-soft); margin-bottom: 8px; font-weight:500; }
+  .case-body li b{ color: var(--ink); font-weight:700; }
+  .case-nav{ display:flex; justify-content:space-between; align-items:center; padding: 40px 0; border-top: 2px solid var(--ink); flex-wrap:wrap; gap: 16px; }
+  .case-nav a{
+    font-family: var(--mono); font-size: 12.5px; font-weight:700; text-transform:uppercase;
+    text-decoration:none; border: 2px solid var(--ink); padding: 10px 18px; transition: all var(--transition);
+  }
+  .case-nav a:hover{ background: var(--ink); color: var(--paper); }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="tooltip"></div>
+
+<header class="site">
+  <div class="wrap navrow">
+    <button class="wordmark" onclick="location.href='../index.html'"><span class="dot"></span>Al Noman / HCI</button>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <nav class="links" id="navLinks">
+        <a href="../index.html#journey">Journey</a>
+        <a href="../index.html#interests">Interests</a>
+        <a href="../index.html#research">Research</a>
+        <a href="../index.html#practice">Practice</a>
+        <a href="../index.html#skills">Skills</a>
+        <a href="../index.html#activities">Activities</a>
+        <a href="../index.html#trajectory">Trajectory</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+      <button id="themeToggle" aria-label="Toggle dark mode">Dark</button>
+      <button id="menuBtn" aria-label="Open menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="case-hero">
+    <div class="wrap">
+      <a class="back-link reveal" href="../index.html#practice">&larr; Back to Design Practice</a>
+      <div class="issue-tag reveal">Practice &middot; Senior Visualizer, PixelPlo</div>
+      <h1 class="case-title reveal">Georgia DHS Document Digitization & Search Solution</h1>
+      <div class="case-meta reveal">
+        <span class="status accepted">Jan — Dec 2024</span><span class="cred-tag">Employee of the Month</span><span class="cred-tag">Sole Designer</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-body">
+    <div class="wrap">
+      
+      <h2>Overview</h2>
+      <p>As Senior Visualizer at PixelPlo, I was the sole designer on the Georgia DHS Document Digitization &amp; Search Solution — built in collaboration with EBIW on a developer-heavy team where design decisions had to be made fast and defended clearly.</p>
+
+      <h2>What I designed</h2>
+      <ul>
+        <li><b>Natural-language search</b> — letting caseworkers query documents in plain English rather than learning a query syntax.</li>
+        <li><b>OTP-protected downloads</b> — balancing document security requirements with a download flow that didn't feel bureaucratic.</li>
+        <li><b>OCR &amp; vectorization upload flows</b> — designing the upload experience around a genuinely technical backend process, so the complexity stayed invisible to the end user.</li>
+      </ul>
+
+      <h2>Process</h2>
+      <p>Being the only designer on a government-facing platform meant conducting user research directly with DHS managers, then translating those findings into interfaces without a design team to sanity-check against — every decision had to be justified on its own merits.</p>
+
+      <h2>Outcome</h2>
+      <p>The project was recognized internally — I was named Employee of the Month at PixelPlo in 2024, largely on the strength of this work.</p>
+  
+    </div>
+  </section>
+</main>
+
+
+    <div class="wrap">
+      <div class="case-nav reveal">
+        <a href="hellotask.html">&larr; Head of Design, Hellotask Technologies</a>
+        <a href="early-practice.html">Early Practice — Devlab, Beeo Digital &  &rarr;</a>
+      </div>
+    </div>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <h2>Let's talk<br>trust, design,<br>or <span class="hl">both.</span></h2>
+      <div class="contact-links">
+        <a href="mailto:abdullahalnomanco@gmail.com">Email</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Google Scholar</a>
+      </div>
+    </div>
+    <div class="fine">Based in Slough, Berkshire, UK &middot; Originally from Barishal, Bangladesh &middot; Updated 2026</div>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="Back to top">&uarr;</button>
+
+<script src="../assets/main.js"></script>
+</body>
+</html>

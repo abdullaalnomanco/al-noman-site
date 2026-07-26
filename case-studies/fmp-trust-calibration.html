@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modeling Trust Calibration in Human-AI Financial Decision Systems — Abdulla Al Noman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,900;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .case-hero{ padding: 44px 0 40px; border-bottom: 3px solid var(--ink); }
+  .back-link{
+    font-family: var(--mono); font-size: 12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em;
+    color: var(--ink-soft); text-decoration:none; display:inline-flex; align-items:center; gap:8px; margin-bottom: 24px;
+  }
+  .back-link:hover{ color: var(--accent); }
+  .case-title{
+    font-family: var(--display); font-weight:900; text-transform:uppercase;
+    font-size: clamp(32px, 5.5vw, 62px); line-height:0.95; letter-spacing:-0.01em; margin: 0 0 20px; max-width: 900px;
+  }
+  .case-meta{ display:flex; flex-wrap:wrap; gap: 10px; margin-bottom: 8px; }
+  .case-body{ padding: 56px 0; }
+  .case-body h2{
+    font-family: var(--display); font-weight:800; text-transform:uppercase; font-size: 22px;
+    margin: 44px 0 16px; border-bottom: 2px solid var(--ink); padding-bottom: 10px;
+  }
+  .case-body h2:first-child{ margin-top:0; }
+  .case-body p{ font-size: 15.5px; color: var(--ink-soft); max-width: 720px; margin: 0 0 16px; font-weight:500; line-height:1.65; }
+  .case-body ul{ max-width: 720px; padding-left: 20px; margin: 0 0 16px; }
+  .case-body li{ font-size: 15.5px; color: var(--ink-soft); margin-bottom: 8px; font-weight:500; }
+  .case-body li b{ color: var(--ink); font-weight:700; }
+  .case-nav{ display:flex; justify-content:space-between; align-items:center; padding: 40px 0; border-top: 2px solid var(--ink); flex-wrap:wrap; gap: 16px; }
+  .case-nav a{
+    font-family: var(--mono); font-size: 12.5px; font-weight:700; text-transform:uppercase;
+    text-decoration:none; border: 2px solid var(--ink); padding: 10px 18px; transition: all var(--transition);
+  }
+  .case-nav a:hover{ background: var(--ink); color: var(--paper); }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="tooltip"></div>
+
+<header class="site">
+  <div class="wrap navrow">
+    <button class="wordmark" onclick="location.href='../index.html'"><span class="dot"></span>Al Noman / HCI</button>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <nav class="links" id="navLinks">
+        <a href="../index.html#journey">Journey</a>
+        <a href="../index.html#interests">Interests</a>
+        <a href="../index.html#research">Research</a>
+        <a href="../index.html#practice">Practice</a>
+        <a href="../index.html#skills">Skills</a>
+        <a href="../index.html#activities">Activities</a>
+        <a href="../index.html#trajectory">Trajectory</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+      <button id="themeToggle" aria-label="Toggle dark mode">Dark</button>
+      <button id="menuBtn" aria-label="Open menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="case-hero">
+    <div class="wrap">
+      <a class="back-link reveal" href="../index.html#research">&larr; Back to Research</a>
+      <div class="issue-tag reveal">Research &middot; Final Major Project (FGCT7024)</div>
+      <h1 class="case-title reveal">Modeling Trust Calibration in Human-AI Financial Decision Systems</h1>
+      <div class="case-meta reveal">
+        <span class="status progress">In Progress — FMP</span><span class="cred-tag">UCA Farnham</span><span class="cred-tag">n = 678 (6,780 obs.)</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-body">
+    <div class="wrap">
+      
+      <h2>Overview</h2>
+      <p>This is my Final Major Project for the MSc in Human-Computer Interaction at the University for the Creative Arts, Farnham, supervised by Roderick Morgan. It investigates how people calibrate trust in AI-generated credit recommendations — specifically whether they end up <b>over-trusting</b>, <b>under-trusting</b>, or reaching an appropriately <b>calibrated</b> level of reliance.</p>
+      <p>The central question: does explaining an AI decision actually help people trust it the right amount, or does it just make them trust it <i>more</i> regardless of whether that trust is deserved?</p>
+
+      <h2>Method</h2>
+      <ul>
+        <li><b>Design:</b> A React-based experimental stimulus presenting 10 fictional loan scenarios under three explanation conditions — none, surface-level, and counterfactual.</li>
+        <li><b>Measurement:</b> The Jian et al. (2000) Trust in Automation scale, paired with reflexive thematic analysis (Braun &amp; Clarke, 2019) of participant reasoning.</li>
+        <li><b>Data:</b> A synthetic dataset of 678 respondents (6,780 observations in long-form) built to pilot the analysis pipeline ahead of the live study.</li>
+      </ul>
+
+      <h2>Where it stands</h2>
+      <p>Following supervisor feedback that the original proposal "looked like an experiment without substantial development," I added a second phase: designing and evaluating an explanation-interface tool based on the study's own findings. That extra "Making" component is what pushes this from a pure research study into a proper HCI design contribution.</p>
+
+      <h2>Why it matters</h2>
+      <p>Explainable AI is often built on the assumption that more explanation is always better. This project tests that assumption directly, in a domain — financial decision-making — where miscalibrated trust has real consequences.</p>
+  
+    </div>
+  </section>
+</main>
+
+
+    <div class="wrap">
+      <div class="case-nav reveal">
+        <a href="early-practice.html">&larr; Early Practice — Devlab, Beeo Digital & </a>
+        <a href="citdi-2026.html">User Sentiment Patterns and Satisfaction &rarr;</a>
+      </div>
+    </div>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <h2>Let's talk<br>trust, design,<br>or <span class="hl">both.</span></h2>
+      <div class="contact-links">
+        <a href="mailto:abdullahalnomanco@gmail.com">Email</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Google Scholar</a>
+      </div>
+    </div>
+    <div class="fine">Based in Slough, Berkshire, UK &middot; Originally from Barishal, Bangladesh &middot; Updated 2026</div>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="Back to top">&uarr;</button>
+
+<script src="../assets/main.js"></script>
+</body>
+</html>

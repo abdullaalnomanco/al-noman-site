@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adaptive VR Workspace — Abdulla Al Noman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,900;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .case-hero{ padding: 44px 0 40px; border-bottom: 3px solid var(--ink); }
+  .back-link{
+    font-family: var(--mono); font-size: 12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em;
+    color: var(--ink-soft); text-decoration:none; display:inline-flex; align-items:center; gap:8px; margin-bottom: 24px;
+  }
+  .back-link:hover{ color: var(--accent); }
+  .case-title{
+    font-family: var(--display); font-weight:900; text-transform:uppercase;
+    font-size: clamp(32px, 5.5vw, 62px); line-height:0.95; letter-spacing:-0.01em; margin: 0 0 20px; max-width: 900px;
+  }
+  .case-meta{ display:flex; flex-wrap:wrap; gap: 10px; margin-bottom: 8px; }
+  .case-body{ padding: 56px 0; }
+  .case-body h2{
+    font-family: var(--display); font-weight:800; text-transform:uppercase; font-size: 22px;
+    margin: 44px 0 16px; border-bottom: 2px solid var(--ink); padding-bottom: 10px;
+  }
+  .case-body h2:first-child{ margin-top:0; }
+  .case-body p{ font-size: 15.5px; color: var(--ink-soft); max-width: 720px; margin: 0 0 16px; font-weight:500; line-height:1.65; }
+  .case-body ul{ max-width: 720px; padding-left: 20px; margin: 0 0 16px; }
+  .case-body li{ font-size: 15.5px; color: var(--ink-soft); margin-bottom: 8px; font-weight:500; }
+  .case-body li b{ color: var(--ink); font-weight:700; }
+  .case-nav{ display:flex; justify-content:space-between; align-items:center; padding: 40px 0; border-top: 2px solid var(--ink); flex-wrap:wrap; gap: 16px; }
+  .case-nav a{
+    font-family: var(--mono); font-size: 12.5px; font-weight:700; text-transform:uppercase;
+    text-decoration:none; border: 2px solid var(--ink); padding: 10px 18px; transition: all var(--transition);
+  }
+  .case-nav a:hover{ background: var(--ink); color: var(--paper); }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="tooltip"></div>
+
+<header class="site">
+  <div class="wrap navrow">
+    <button class="wordmark" onclick="location.href='../index.html'"><span class="dot"></span>Al Noman / HCI</button>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <nav class="links" id="navLinks">
+        <a href="../index.html#journey">Journey</a>
+        <a href="../index.html#interests">Interests</a>
+        <a href="../index.html#research">Research</a>
+        <a href="../index.html#practice">Practice</a>
+        <a href="../index.html#skills">Skills</a>
+        <a href="../index.html#activities">Activities</a>
+        <a href="../index.html#trajectory">Trajectory</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+      <button id="themeToggle" aria-label="Toggle dark mode">Dark</button>
+      <button id="menuBtn" aria-label="Open menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="case-hero">
+    <div class="wrap">
+      <a class="back-link reveal" href="../index.html#research">&larr; Back to Research</a>
+      <div class="issue-tag reveal">Research &middot; UCA Coursework Project (FGCT7023)</div>
+      <h1 class="case-title reveal">Adaptive VR Workspace</h1>
+      <div class="case-meta reveal">
+        <span class="status accepted">8.25/10 Productivity</span><span class="cred-tag">Figma prototype</span><span class="cred-tag">Postgrad cohort study</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-body">
+    <div class="wrap">
+      
+      <h2>Overview</h2>
+      <p>A VR workspace system that adapts to how the user is actually feeling, not just what they're doing. It offers four presets — <b>Focus</b>, <b>Calm</b>, <b>Energy</b>, and <b>Social</b> — that respond to a user's mood, focus level, and energy.</p>
+
+      <h2>Theoretical grounding</h2>
+      <p>The design draws on Attention Restoration Theory, Construal Level Theory, Affective Computing, Norman's Emotional Design framework, Self-Determination Theory, the Yerkes-Dodson law, and biophilic design principles — treating the environment itself as a design material, not just a backdrop.</p>
+
+      <h2>Testing &amp; findings</h2>
+      <ul>
+        <li>Tested with 2 UCA postgraduate design students; mean perceived productivity of <b>8.25/10</b>.</li>
+        <li>The clearest preference to emerge: users wanted a <b>persistent, floating environment switcher</b> — a "chat-head" style control — rather than a menu they had to leave the experience to access. That maps directly onto calm-technology principles: the control should be always-available but never demanding attention.</li>
+      </ul>
+
+      <h2>Prototype</h2>
+      <p>Built as a full interactive Figma prototype (file key <code>iJsowJHWLi2JGhp6bvJ6wH</code>), covering all four environment presets and the switcher interaction.</p>
+  
+    </div>
+  </section>
+</main>
+
+
+    <div class="wrap">
+      <div class="case-nav reveal">
+        <a href="bubbledo.html">&larr; BubbleDo — Spatial Task Management</a>
+        <a href="hellotask.html">Head of Design, Hellotask Technologies &rarr;</a>
+      </div>
+    </div>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <h2>Let's talk<br>trust, design,<br>or <span class="hl">both.</span></h2>
+      <div class="contact-links">
+        <a href="mailto:abdullahalnomanco@gmail.com">Email</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Google Scholar</a>
+      </div>
+    </div>
+    <div class="fine">Based in Slough, Berkshire, UK &middot; Originally from Barishal, Bangladesh &middot; Updated 2026</div>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="Back to top">&uarr;</button>
+
+<script src="../assets/main.js"></script>
+</body>
+</html>

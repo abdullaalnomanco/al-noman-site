@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdulla Al Noman — Human–AI Interaction Research &amp; Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,900;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-root=".">
+
+<div id="progress"></div>
+<div id="tooltip"></div>
+
+<header class="site">
+  <div class="wrap navrow">
+    <button class="wordmark" onclick="window.scrollTo({top:0,behavior:'smooth'})"><span class="dot"></span>Al Noman / HCI</button>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <nav class="links" id="navLinks">
+        <a href="#journey">Journey</a>
+        <a href="#interests">Interests</a>
+        <a href="#research">Research</a>
+        <a href="#practice">Practice</a>
+        <a href="#skills">Skills</a>
+        <a href="#activities">Activities</a>
+        <a href="#trajectory">Trajectory</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button id="themeToggle" aria-label="Toggle dark mode">Dark</button>
+      <button id="menuBtn" aria-label="Open menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="cover">
+    <div class="wrap">
+      <div class="issue-tag">Vol. 01 — Human–AI Interaction Research &amp; Design</div>
+
+      <div class="cover-grid">
+        <div class="reveal">
+          <h1 class="masthead"><span>Abdulla</span><span>Al <span class="hl">Noman</span></span></h1>
+          <div class="kicker">6 Years Design — 2 Years Research — MSc HCI, UCA Farnham</div>
+        </div>
+        <div class="cover-photo reveal">
+          <img src="assets/hero.jpg" alt="Abdulla Al Noman, seated at a London waterfront in the evening light">
+          <div class="frame-tag right">London, 2026</div>
+        </div>
+      </div>
+
+      <div class="pullquote reveal">
+        <div class="mark">"</div>
+        <p data-cms="hero_thesis">I study the gap between what people <b>trust</b> and what a system actually <b>deserves</b> — then I design the interface that closes it.</p>
+      </div>
+      <div class="mission-line reveal" data-cms="hero_mission">This is the work I intend to spend my whole career on — how people and screens, and now people and AI, actually get along.</div>
+
+      <div class="cred-row reveal">
+        <span class="cred-tag">6+ yrs Design · 2+ yrs Research</span>
+        <span class="cred-tag">Head of Design, Hellotask Technologies</span>
+        <span class="cred-tag">CITDI 2026 — Accepted</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNEY MAP -->
+  <section id="journey">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <h2>The Journey</h2>
+        </div>
+        <div class="section-note">Two tracks, one direction — academic and professional, side by side. Click any point.</div>
+      </div>
+
+      <div class="filter-row reveal" id="journeyFilters">
+        <button class="filter-btn active" data-lane="all">All</button>
+        <button class="filter-btn" data-lane="academic">Academic</button>
+        <button class="filter-btn" data-lane="professional">Professional</button>
+      </div>
+
+      <div class="journey-panel reveal">
+        <div class="journey-head"><span>Career &amp; Research Roadmap</span><span>2019 — 2027 · click a point</span></div>
+        <svg id="journeySvg" viewBox="0 0 900 280" width="100%" height="auto" role="img" aria-label="Roadmap of academic and professional milestones and achievements from 2019 to 2027, labeled with institution and company names">
+          <!-- year gridlines -->
+          <g id="yearGrid"></g>
+          <!-- lane labels -->
+          <text x="4" y="52" font-family="IBM Plex Mono" font-weight="700" font-size="9" fill="var(--accent)">ACADEMIC</text>
+          <text x="4" y="228" font-family="IBM Plex Mono" font-weight="700" font-size="9" fill="var(--ink)">PROFESSIONAL</text>
+          <!-- lane lines -->
+          <g id="laneAcademic">
+            <polyline points="60,90 220,90 300,90 484,90 700,90 744,90 784,90 820,90" fill="none" stroke="var(--accent)" stroke-width="3"/>
+            <polyline points="820,90 860,90" fill="none" stroke="var(--accent)" stroke-width="3" stroke-dasharray="5,5"/>
+          </g>
+          <g id="laneProfessional">
+            <polyline points="468,190 508,190 588,190 644,190 724,190 860,190" fill="none" stroke="var(--ink)" stroke-width="3"/>
+          </g>
+          <g id="journeyNodes"></g>
+        </svg>
+        <div class="fig-caption">A candid look at how the academic (MSc HCI, publications) and professional (design leadership) tracks run in parallel — dashed marks a target, not yet reached; the professional line runs solid to the edge since the current role is ongoing.</div>
+
+        <div class="journey-detail" id="journeyDetail">
+          <div class="jd-eyebrow" id="jdEyebrow">Click any point above</div>
+          <h3 id="jdTitle">See the story behind each milestone</h3>
+          <p id="jdBody">Every dot on the roadmap is a real achievement — a degree, a paper, a role, a usability score. Tap or click one to read the detail here.</p>
+        </div>
+      </div>
+
+      <div class="achv-strip reveal">
+        <div class="achv-stat"><div class="achv-num" data-target="6" data-suffix="+">0</div><div class="achv-label">Years in design practice</div></div>
+        <div class="achv-stat"><div class="achv-num" data-target="2" data-suffix="+">0</div><div class="achv-label">Years in HCI research</div></div>
+        <div class="achv-stat"><div class="achv-num" data-target="150" data-suffix="+">0</div><div class="achv-label">Events organized, DIU Club</div></div>
+        <div class="achv-stat"><div class="achv-num" data-target="84" data-suffix=".0">0</div><div class="achv-label">SUS score — BubbleDo (Excellent)</div></div>
+        <div class="achv-stat"><div class="achv-num" data-target="10303" data-suffix="">0</div><div class="achv-label">App reviews analyzed, CITDI 2026</div></div>
+        <div class="achv-stat"><div class="achv-num" data-target="8.25" data-suffix="/10" data-decimal="1">0</div><div class="achv-label">Productivity, Adaptive VR study</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH INTERESTS -->
+  <section id="interests">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <h2>Research Interests</h2>
+        </div>
+        <div class="section-note">The questions I keep coming back to — across design and research.</div>
+      </div>
+
+      <div class="interest-grid">
+        <div class="interest-card reveal">
+          <div class="inum">01</div>
+          <h3>Human-Computer Interaction</h3>
+          <p>How people actually use systems, versus how systems are designed to be used.</p>
+        </div>
+        <div class="interest-card reveal">
+          <div class="inum">02</div>
+          <h3>Human-AI Interaction</h3>
+          <p>The interface layer where people and AI systems negotiate control, judgment, and understanding.</p>
+        </div>
+        <div class="interest-card reveal">
+          <div class="inum">03</div>
+          <h3>Trustworthy &amp; Explainable AI</h3>
+          <p>Designing explanations that calibrate trust, rather than just increasing it.</p>
+        </div>
+        <div class="interest-card reveal">
+          <div class="inum">04</div>
+          <h3>Trust Calibration in Automation</h3>
+          <p>Measuring over-trust, under-trust, and the conditions that produce appropriate reliance.</p>
+        </div>
+        <div class="interest-card reveal">
+          <div class="inum">05</div>
+          <h3>Adaptive &amp; Immersive Interfaces</h3>
+          <p>VR/XR environments and interfaces that respond to a user's mood, focus, and context.</p>
+        </div>
+        <div class="interest-card reveal">
+          <div class="inum">06</div>
+          <h3>Fintech UX &amp; Decision Support</h3>
+          <p>How explanation design shapes trust and behavior in AI-driven financial decisions.</p>
+        </div>
+        <div class="interest-card wildcard reveal">
+          <div class="inum">&amp;</div>
+          <h3>Whatever I'm Curious About</h3>
+          <p>Honestly, anything I don't yet understand. If a question is interesting enough, I'll chase it outside these six boxes too.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <h2>Research</h2>
+        </div>
+        <div class="section-note">Ongoing and published work on trust, explainability, and behavior in human–AI systems. Click any entry to expand.</div>
+      </div>
+
+      <div class="filter-row reveal">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="accepted">Accepted</button>
+        <button class="filter-btn" data-filter="progress">In Progress</button>
+      </div>
+
+      <div id="paperList">
+        <div class="paper reveal" data-status="progress">
+          <button class="paper-head" aria-expanded="false">
+            <div class="idx">01</div>
+            <div>
+              <span class="status progress">In progress — FMP</span>
+              <h3>Modeling Trust Calibration in Human–AI Financial Decision Systems</h3>
+            </div>
+            <div class="chev">+</div>
+          </button>
+          <div class="paper-body"><div class="paper-body-inner"><div class="paper-body-content">
+            <p>A behavioral and interactional study of over-trust, under-trust, and calibrated trust in AI credit recommendations, tested across three explanation conditions using a purpose-built experimental stimulus and reflexive thematic analysis.</p>
+            <div class="meta-strip">
+              <span>FGCT7024 · UCA Farnham</span>
+              <span>Jian et al. Trust in Automation scale</span>
+              <span>Braun &amp; Clarke, 2019</span>
+              <span>n = 678 (6,780 obs.)</span>
+            </div>
+            <a class="case-link" href="case-studies/fmp-trust-calibration.html">Read the full case study &rarr;</a>
+          </div></div></div>
+        </div>
+
+        <div class="paper reveal" data-status="accepted">
+          <button class="paper-head" aria-expanded="false">
+            <div class="idx">02</div>
+            <div>
+              <span class="status accepted">Accepted — CITDI 2026</span>
+              <h3>User Sentiment Patterns and Satisfaction Drivers in Mobile App Ecosystems</h3>
+            </div>
+            <div class="chev">+</div>
+          </button>
+          <div class="paper-body"><div class="paper-body-inner"><div class="paper-body-content">
+            <p>Statistical analysis of 10,303 Google Play Store reviews to identify what actually drives satisfaction — combining non-parametric hypothesis testing with supervised classification.</p>
+            <div class="meta-strip">
+              <span>Springer / EAI · Scopus-indexed</span>
+              <span>Mann–Whitney U</span>
+              <span>Chi-square</span>
+              <span>ML classifiers</span>
+            </div>
+            <a class="case-link" href="case-studies/citdi-2026.html">Read the full case study &rarr;</a>
+          </div></div></div>
+        </div>
+
+        <div class="paper reveal" data-status="accepted">
+          <button class="paper-head" aria-expanded="false">
+            <div class="idx">03</div>
+            <div>
+              <span class="status accepted">SUS 84.0 — Excellent</span>
+              <h3>BubbleDo — Spatial Task Management</h3>
+            </div>
+            <div class="chev">+</div>
+          </button>
+          <div class="paper-body"><div class="paper-body-inner"><div class="paper-body-content">
+            <p>A task manager where urgency is encoded spatially rather than in lists — floating bubbles with colour, pulse, and countdown rings. Nine of ten test participants grouped tasks spatially without being told to.</p>
+            <div class="meta-strip">
+              <span>FGCT7022 · UCA Farnham</span>
+              <span>10-participant usability study</span>
+              <span>React prototype</span>
+            </div>
+            <a class="case-link" href="case-studies/bubbledo.html">Read the full case study &rarr;</a>
+          </div></div></div>
+        </div>
+
+        <div class="paper reveal" data-status="accepted">
+          <button class="paper-head" aria-expanded="false">
+            <div class="idx">04</div>
+            <div>
+              <span class="status accepted">Mean productivity 8.25/10</span>
+              <h3>Adaptive VR Workspace</h3>
+            </div>
+            <div class="chev">+</div>
+          </button>
+          <div class="paper-body"><div class="paper-body-inner"><div class="paper-body-content">
+            <p>Four mood-responsive VR environments — Focus, Calm, Energy, Social — grounded in Attention Restoration Theory, Self-Determination Theory, and biophilic design.</p>
+            <div class="meta-strip">
+              <span>FGCT7023 · UCA Farnham</span>
+              <span>Figma prototype</span>
+              <span>Postgraduate design cohort study</span>
+            </div>
+            <a class="case-link" href="case-studies/adaptive-vr-workspace.html">Read the full case study &rarr;</a>
+          </div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRACTICE -->
+  <section id="practice">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <h2>Design Practice</h2>
+        </div>
+        <div class="section-note">Six years designing for real users, real constraints, real deadlines.</div>
+      </div>
+      <div class="practice-grid">
+        <div class="card reveal">
+          <div class="role">Head of Design</div>
+          <h3>Hellotask Technologies</h3>
+          <p>Leading the end-to-end design process — research, ideation, and UI/UX execution — while building a scalable design system and mentoring the design team.</p>
+          <div class="stat">Jan 2025 – Present</div>
+          <a class="case-link" href="case-studies/hellotask.html">Read the full case study &rarr;</a>
+        </div>
+        <div class="card reveal">
+          <div class="role">Senior Visualizer</div>
+          <h3>PixelPlo — Georgia DHS</h3>
+          <p>Sole designer on the Georgia DHS Document Digitization &amp; Search Solution with EBIW — natural-language search, OTP-protected downloads, and OCR/vectorization upload flows. Named Employee of the Month.</p>
+          <div class="stat">Jan – Dec 2024</div>
+          <a class="case-link" href="case-studies/pixelplo-georgia-dhs.html">Read the full case study &rarr;</a>
+        </div>
+        <div class="card reveal">
+          <div class="role">Progressive practice</div>
+          <h3>Devlab → Beeo → Corporate Ask</h3>
+          <p>UI/UX design across Devlab Solution, Beeo Digital, and Corporate Ask, plus a year as Research Assistant at DIU's FabLab — the foundation before stepping into design leadership.</p>
+          <div class="stat">2022 – 2024</div>
+          <a class="case-link" href="case-studies/early-practice.html">Read the full case study &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <h2>Skills</h2>
+        </div>
+        <div class="section-note">Tools and methods across design and research.</div>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <div class="skill-cat">01 — Design Software</div>
+          <div class="pill-row">
+            <span class="skill-pill">Figma</span>
+            <span class="skill-pill">Adobe XD</span>
+            <span class="skill-pill">Adobe Illustrator</span>
+            <span class="skill-pill">Adobe Photoshop</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-cat">02 — Design Process</div>
+          <div class="pill-row">
+            <span class="skill-pill">Wireframing</span>
+            <span class="skill-pill">Prototyping</span>
+            <span class="skill-pill">Interaction Design</span>
+            <span class="skill-pill">User Research</span>
+            <span class="skill-pill">Usability Testing</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-cat">03 — HCI &amp; Research Tools</div>
+          <div class="pill-row">
+            <span class="skill-pill">Qualtrics</span>
+            <span class="skill-pill">Statistical Analysis</span>
+            <span class="skill-pill">Unity</span>
+            <span class="skill-pill">Adobe Aero</span>
+            <span class="skill-pill">Spark AR</span>
+            <span class="skill-pill">Reality Composer</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-cat">04 — General</div>
+          <div class="pill-row">
+            <span class="skill-pill">Microsoft Office</span>
+            <span class="skill-pill">Google Suite</span>
+            <span class="skill-pill">LaTeX</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXTRACURRICULAR -->
+  <section id="activities">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <h2>Extracurricular</h2>
+        </div>
+        <div class="section-note">Leadership, organizing, and community at DIU.</div>
+      </div>
+      <p class="activities-intro reveal">Beyond design and research, I've organized programming contests, judged student competitions, and helped build the DIU tech community.</p>
+
+      <div class="activity-grid">
+        <div class="activity-card reveal">
+          <div class="activity-mark">GS</div>
+          <div class="activity-when">2020 – 2024</div>
+          <h3>General Secretary, DIU Computer Programming Club</h3>
+          <p>Administration, communication, documentation, supervision, budgeting, and policy implementation across 150+ events. Previously Assistant General Secretary (2022).</p>
+        </div>
+        <div class="activity-card reveal">
+          <div class="activity-mark">JS</div>
+          <div class="activity-when">2022</div>
+          <h3>Joint Secretary, DIU Debating Club</h3>
+          <p>Debate, communication, policy management, and leadership assistance. Second Runners-Up, Debate for Democracy (2021).</p>
+        </div>
+        <div class="activity-card reveal">
+          <div class="activity-mark">&amp;</div>
+          <div class="activity-when">2022 – 2023</div>
+          <h3>Contest &amp; Event Involvement</h3>
+          <p>Problem Setter (Datathon Fall 2023, TypeTrek Face-Off 2023) · Judge (Googling Contest 2023) · Organiser (Take Off Programming Contest, Unlock the Algorithm, DIU CSE Fest 2022) · Volunteer (BdOI 2023, BIM 2023, NGPC 2022).</p>
+        </div>
+      </div>
+
+      <div class="honours-row reveal">
+        <span class="honour-tag">Champion — CSE Fest UI Design Competition, 2022</span>
+        <span class="honour-tag">Employee of the Month — PixelPlo, 2024</span>
+        <span class="honour-tag">Performance Scholarship — DIU, 2020–2022</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAJECTORY -->
+  <section id="trajectory">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <h2>Trajectory</h2>
+        </div>
+        <div class="section-note">Chronological — the actual order this happened in.</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item"><div class="when">2017</div><div class="what"><b>Secondary School Certificate</b> (Science), Patuakhali Govt. Jubilee High School, Bangladesh.</div></div>
+        <div class="tl-item"><div class="when">2019</div><div class="what"><b>Higher Secondary Certificate</b> (Science), Patuakhali Govt. College, Bangladesh.</div></div>
+        <div class="tl-item"><div class="when">2020–2024</div><div class="what"><b>BSc Computer Science &amp; Engineering</b>, Daffodil International University. General Secretary, DIU Computer Programming Club (150+ events organised); performance-based scholarship, 2020–2022.</div></div>
+        <div class="tl-item"><div class="when">2022</div><div class="what">Design internships at <b>Corporate Ask</b> and <b>Beeo Digital</b>, alongside a year as Research Assistant at DIU's FabLab.</div></div>
+        <div class="tl-item"><div class="when">2023–2024</div><div class="what"><b>UI/UX Designer</b>, Devlab Solution.</div></div>
+        <div class="tl-item"><div class="when">2024</div><div class="what"><b>Senior Visualizer</b>, PixelPlo — sole designer on the Georgia DHS Document Digitization project; named Employee of the Month.</div></div>
+        <div class="tl-item"><div class="when">2025 –</div><div class="what"><b>Head of Design</b>, Hellotask Technologies, alongside an <b>MSc Human-Computer Interaction</b> at the University for the Creative Arts, Farnham — BubbleDo, Adaptive VR Workspace, and the current FMP on trust calibration.</div></div>
+        <div class="tl-item"><div class="when">2026</div><div class="what">First peer-reviewed paper accepted at <b>CITDI 2026</b> (Springer/EAI, Scopus).</div></div>
+        <div class="tl-item"><div class="when">2027 →</div><div class="what">Target: PhD in Human-AI Interaction &amp; Trustworthy AI.</div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <h2>Let's talk<br>trust, design,<br>or <span class="hl">both.</span></h2>
+      <div class="contact-links">
+        <a href="mailto:abdullahalnomanco@gmail.com" data-cms="contact_email" data-cms-attr="href" data-cms-prefix="mailto:">Email</a>
+        <a href="#" data-cms="contact_linkedin_url" data-cms-attr="href">LinkedIn</a>
+        <a href="#" data-cms="contact_scholar_url" data-cms-attr="href">Google Scholar</a>
+      </div>
+    </div>
+    <div class="fine">Based in Slough, Berkshire, UK · Originally from Barishal, Bangladesh · Updated 2026</div>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<script src="assets/cms-loader.js"></script>
+<script src="assets/main.js"></script>
+
+</body>
+</html>

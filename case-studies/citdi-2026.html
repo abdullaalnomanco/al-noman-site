@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Sentiment Patterns and Satisfaction Drivers in Mobile App Ecosystems — Abdulla Al Noman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,900;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .case-hero{ padding: 44px 0 40px; border-bottom: 3px solid var(--ink); }
+  .back-link{
+    font-family: var(--mono); font-size: 12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em;
+    color: var(--ink-soft); text-decoration:none; display:inline-flex; align-items:center; gap:8px; margin-bottom: 24px;
+  }
+  .back-link:hover{ color: var(--accent); }
+  .case-title{
+    font-family: var(--display); font-weight:900; text-transform:uppercase;
+    font-size: clamp(32px, 5.5vw, 62px); line-height:0.95; letter-spacing:-0.01em; margin: 0 0 20px; max-width: 900px;
+  }
+  .case-meta{ display:flex; flex-wrap:wrap; gap: 10px; margin-bottom: 8px; }
+  .case-body{ padding: 56px 0; }
+  .case-body h2{
+    font-family: var(--display); font-weight:800; text-transform:uppercase; font-size: 22px;
+    margin: 44px 0 16px; border-bottom: 2px solid var(--ink); padding-bottom: 10px;
+  }
+  .case-body h2:first-child{ margin-top:0; }
+  .case-body p{ font-size: 15.5px; color: var(--ink-soft); max-width: 720px; margin: 0 0 16px; font-weight:500; line-height:1.65; }
+  .case-body ul{ max-width: 720px; padding-left: 20px; margin: 0 0 16px; }
+  .case-body li{ font-size: 15.5px; color: var(--ink-soft); margin-bottom: 8px; font-weight:500; }
+  .case-body li b{ color: var(--ink); font-weight:700; }
+  .case-nav{ display:flex; justify-content:space-between; align-items:center; padding: 40px 0; border-top: 2px solid var(--ink); flex-wrap:wrap; gap: 16px; }
+  .case-nav a{
+    font-family: var(--mono); font-size: 12.5px; font-weight:700; text-transform:uppercase;
+    text-decoration:none; border: 2px solid var(--ink); padding: 10px 18px; transition: all var(--transition);
+  }
+  .case-nav a:hover{ background: var(--ink); color: var(--paper); }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="tooltip"></div>
+
+<header class="site">
+  <div class="wrap navrow">
+    <button class="wordmark" onclick="location.href='../index.html'"><span class="dot"></span>Al Noman / HCI</button>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <nav class="links" id="navLinks">
+        <a href="../index.html#journey">Journey</a>
+        <a href="../index.html#interests">Interests</a>
+        <a href="../index.html#research">Research</a>
+        <a href="../index.html#practice">Practice</a>
+        <a href="../index.html#skills">Skills</a>
+        <a href="../index.html#activities">Activities</a>
+        <a href="../index.html#trajectory">Trajectory</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+      <button id="themeToggle" aria-label="Toggle dark mode">Dark</button>
+      <button id="menuBtn" aria-label="Open menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="case-hero">
+    <div class="wrap">
+      <a class="back-link reveal" href="../index.html#research">&larr; Back to Research</a>
+      <div class="issue-tag reveal">Research &middot; Peer-Reviewed Paper</div>
+      <h1 class="case-title reveal">User Sentiment Patterns and Satisfaction Drivers in Mobile App Ecosystems</h1>
+      <div class="case-meta reveal">
+        <span class="status accepted">Accepted — CITDI 2026</span><span class="cred-tag">Springer / EAI</span><span class="cred-tag">Scopus-indexed</span><span class="cred-tag">10,303 reviews</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-body">
+    <div class="wrap">
+      
+      <h2>Overview</h2>
+      <p>My first peer-reviewed publication, accepted at CITDI 2026 (Springer/EAI, Scopus-indexed). The paper asks a deceptively simple question: what actually drives user satisfaction in mobile apps, versus what app teams <i>assume</i> drives it?</p>
+
+      <h2>Method</h2>
+      <ul>
+        <li><b>Data:</b> 10,303 Google Play Store reviews collected across a range of app categories.</li>
+        <li><b>Statistical analysis:</b> Mann-Whitney U tests and Chi-square tests to identify meaningful differences in sentiment across app segments.</li>
+        <li><b>Machine learning:</b> Supervised classifiers trained to predict satisfaction drivers from review text and metadata.</li>
+      </ul>
+
+      <h2>Post-acceptance work</h2>
+      <p>Since acceptance, I've been running an ablation study and additional cross-validation passes ahead of the camera-ready submission, and preparing the formal AI-use disclosure required by Springer's editorial policy.</p>
+
+      <h2>Why it matters</h2>
+      <p>This paper is the first formal publication credential on my PhD pathway, and it sits at the intersection of my two tracks — using rigorous statistical methods (research) to answer a genuinely useful product question (design).</p>
+  
+    </div>
+  </section>
+</main>
+
+
+    <div class="wrap">
+      <div class="case-nav reveal">
+        <a href="fmp-trust-calibration.html">&larr; Modeling Trust Calibration in Human-AI F</a>
+        <a href="bubbledo.html">BubbleDo — Spatial Task Management &rarr;</a>
+      </div>
+    </div>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <h2>Let's talk<br>trust, design,<br>or <span class="hl">both.</span></h2>
+      <div class="contact-links">
+        <a href="mailto:abdullahalnomanco@gmail.com">Email</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Google Scholar</a>
+      </div>
+    </div>
+    <div class="fine">Based in Slough, Berkshire, UK &middot; Originally from Barishal, Bangladesh &middot; Updated 2026</div>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="Back to top">&uarr;</button>
+
+<script src="../assets/main.js"></script>
+</body>
+</html>

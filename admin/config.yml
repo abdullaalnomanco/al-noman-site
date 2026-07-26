@@ -1,0 +1,26 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# After you connect this site to Netlify and enable Identity + Git Gateway,
+# this admin panel lets you log in at yoursite.netlify.app/admin and edit
+# the fields below. Saving here commits straight to your GitHub repo and
+# Netlify redeploys the site automatically.
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "site_content"
+    label: "Site Content"
+    files:
+      - file: "content.json"
+        label: "Homepage Text"
+        name: "homepage"
+        fields:
+          - { label: "Hero Thesis (the pull-quote)", name: "hero_thesis", widget: "text" }
+          - { label: "Hero Mission Line", name: "hero_mission", widget: "text" }
+          - { label: "Contact Email", name: "contact_email", widget: "string" }
+          - { label: "LinkedIn URL", name: "contact_linkedin_url", widget: "string" }
+          - { label: "Google Scholar URL", name: "contact_scholar_url", widget: "string" }
+          - { label: "GitHub URL", name: "contact_github_url", widget: "string" }
