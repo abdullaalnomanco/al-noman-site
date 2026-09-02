@@ -60,7 +60,15 @@ def make_respondent(rng, respondent_id, condition):
         "age": clamp(round(rng.gauss(34, 11)), 18, 75),
         "gender": rng.choices(GENDERS, weights=GENDER_WEIGHTS, k=1)[0],
         "financial_literacy": clamp(round(rng.gauss(3.1, 1.0)), 1, 5),
+        # Need for Cognition (Cacioppo & Petty, 1982 short-form style) and
+        # tech disposition, both 1-7 composite self-report scales.
+        "need_for_cognition": clamp(round(rng.gauss(4.3, 1.2), 2), 1, 7),
+        "tech_disposition": clamp(round(rng.gauss(4.5, 1.3), 2), 1, 7),
         "condition": condition,
+        # Stable per-respondent trust disposition, applied to every one of
+        # their 10 scenario judgments — this is the individual-differences
+        # signal a random intercept (mixed-effects model) should recover.
+        "_trust_baseline_offset": rng.gauss(0, 0.55),
     }
 
 
@@ -100,16 +108,29 @@ def generate_rows():
             # actually shifts toward the ground-truth correctness.
             confidence_pull = (scenario["ai_confidence"] - 50) / 50 * 1.5
             correctness_pull = (1.5 if scenario["ai_correct"] else -1.5) * strength
-            base_trust = clamp(4.0 + confidence_pull + correctness_pull + rng.gauss(0, 0.4), 1, 7)
+            base_trust = clamp(
+                4.0 + confidence_pull + correctness_pull + respondent["_trust_baseline_offset"] + rng.gauss(0, 0.4),
+                1, 7,
+            )
 
             items = make_trust_items(rng, base_trust)
             trust_composite = round(statistics.mean(items.values()), 2)
 
-            agree_prob = clamp((trust_composite - 1) / 6, 0.03, 0.97)
+            # Individual differences nudge reliance on top of trust itself:
+            # more tech-disposed respondents lean on the AI more; higher
+            # need-for-cognition and financial literacy make people scrutinize
+            # more and rely on it less, independent of momentary trust.
+            trait_pull = (
+                0.05 * (respondent["tech_disposition"] - 4)
+                - 0.04 * (respondent["need_for_cognition"] - 4)
+                - 0.03 * (respondent["financial_literacy"] - 3)
+            )
+            agree_prob = clamp((trust_composite - 1) / 6 + trait_pull, 0.02, 0.98)
             agree_with_ai = rng.random() < agree_prob
 
+            respondent_public = {k: v for k, v in respondent.items() if not k.startswith("_")}
             row = {
-                **respondent,
+                **respondent_public,
                 "scenario_id": scenario["id"],
                 "loan_amount": scenario["loan_amount"],
                 "applicant_credit_score": scenario["credit_score"],
