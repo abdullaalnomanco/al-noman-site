@@ -33,7 +33,7 @@ GENDER_WEIGHTS = [0.47, 0.47, 0.04, 0.02]
 SCENARIOS = [
     {"id": 1, "loan_amount": 8000, "credit_score": 610, "ai_recommendation": "deny", "ai_confidence": 82, "ai_correct": True},
     {"id": 2, "loan_amount": 15000, "credit_score": 705, "ai_recommendation": "approve", "ai_confidence": 91, "ai_correct": True},
-    {"id": 3, "loan_amount": 22000, "credit_score": 640, "ai_recommendation": "approve", "ai_confidence": 58, "ai_correct": False},
+    {"id": 3, "loan_amount": 22000, "credit_score": 640, "ai_recommendation": "approve", "ai_confidence": 58, "ai_correct": True},
     {"id": 4, "loan_amount": 5000, "credit_score": 590, "ai_recommendation": "deny", "ai_confidence": 74, "ai_correct": True},
     {"id": 5, "loan_amount": 30000, "credit_score": 720, "ai_recommendation": "approve", "ai_confidence": 88, "ai_correct": True},
     {"id": 6, "loan_amount": 12000, "credit_score": 655, "ai_recommendation": "deny", "ai_confidence": 63, "ai_correct": False},
