@@ -277,8 +277,8 @@ def run_mixed_effects(df):
     print("4. MIXED-EFFECTS MODEL (random intercept per respondent)")
     print("=" * 72)
     print("DV: trust_composite. Fixed effect: condition. Random intercept: respondent_id.")
-    print("(Each respondent contributes 10 scenario-level observations, so a plain")
-    print(" OLS/ANOVA on all 6,780 rows would treat those as independent — this doesn't.)")
+    print("(Each respondent contributes multiple scenario-level observations, so a plain")
+    print(" OLS/ANOVA across all rows would treat those as independent — this doesn't.)")
 
     model = smf.mixedlm(
         "trust_composite ~ C(condition)",
