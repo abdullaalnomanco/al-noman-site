@@ -42,23 +42,23 @@ python3 generate_dataset.py
 
 ## Design notes
 
-Trust is simulated as a function of the AI's stated confidence plus how strongly the scenario's actual correctness pulls trust in the right direction — that pull is weakest under `none` and strongest under `counterfactual`, which is the effect the live study is designed to test for real. Each respondent also has a stable individual trust baseline applied across all 10 of their scenarios (so the 10 rows per respondent are correlated, not independent — the reason the mixed-effects model exists), and reliance on the AI shifts independently with `tech_disposition` (+), `need_for_cognition` (–), and `financial_literacy` (–). Run `generate_dataset.py` to print a count summary (respondents, observations, per-condition and per-label breakdowns) alongside the CSV.
+Trust is simulated as a function of the AI's stated confidence, how strongly the scenario's actual correctness pulls trust in the right direction (weakest under `none`, strongest under `counterfactual` — the effect the live study is designed to test for real, deliberately kept modest rather than dominant), a stable per-respondent trust baseline applied across all 10 of that person's scenarios (the reason the 10 rows per respondent are correlated, not independent — and the signal the mixed-effects model's random intercept should recover), and per-observation noise that's larger for ambiguous scenarios (AI confidence near 50) than clear-cut ones. Individual-difference traits shift reliance on the AI independently of momentary trust: `tech_disposition` (+), `need_for_cognition` (–), `financial_literacy` (–). Between-respondent variance intentionally dominates the condition effect — real people vary far more than a single manipulation moves them — so the numbers below read like noisy human data rather than a plan executing cleanly. Run `generate_dataset.py` to print a count summary (respondents, observations, per-condition and per-label breakdowns) alongside the CSV.
 
 ## Analysis
 
 `run_models.py` runs four models against the pipeline the live study will use:
 
 1. **One-way ANOVA + Tukey-Kramer** — on respondent-level means (trust, agreement rate, decision accuracy, response time) across the three conditions, with pairwise post-hoc tests where the omnibus test is significant.
-2. **Bradley-Terry model** — treats each of the 10 scenarios as a contest between conditions on decision accuracy and fits pairwise "win" strengths (MM/Zermelo algorithm) and head-to-head win probabilities.
+2. **Bradley-Terry model** — for each scenario, runs individual duels: a random respondent from condition A vs. one from condition B on that scenario, decided by each person's *actual* decision outcome (not the group mean), ties split 0.5/0.5. Fits pairwise "win" strengths (MM/Zermelo algorithm) and head-to-head win probabilities from those duels.
 3. **Logistic regression** — predicts "high AI follower" (agreement rate above the sample median) from `financial_literacy`, `need_for_cognition`, `tech_disposition`, and condition.
 4. **Mixed-effects model** — `trust_composite ~ condition` with a random intercept per `respondent_id`, since each respondent contributes 10 non-independent observations; reports the intraclass correlation (ICC).
 
 Headline results from the current seed (see `model_results.txt` for full output):
 
-- Trust and decision accuracy both increase sharply from `none` → `surface` → `counterfactual` (ANOVA p < .001 for both; all Tukey-Kramer pairwise contrasts significant except `none` vs `surface` on agreement rate).
-- The Bradley-Terry model puts almost all pairwise "win" strength on `counterfactual` (≈0.999 vs ≈0.001 for `surface` and `none`) — it wins essentially every scenario-level accuracy contest.
-- In the logistic regression, `tech_disposition` raises the odds of being a high AI follower (OR ≈ 1.63, p < .001), while `need_for_cognition` (OR ≈ 0.70, p < .001) and `financial_literacy` (OR ≈ 0.82, p = .022) lower it; being in `counterfactual` also raises it (OR ≈ 3.1, p < .001) relative to `none`.
-- The mixed-effects model's random intercept has ICC ≈ 0.12 — about 12% of the variance in trust sits at the respondent level, confirming the 10 observations per respondent aren't independent and justifying the clustered model over a naive OLS/ANOVA on all 6,780 rows.
+- Trust (p = .016) and decision accuracy (p < .001) differ across conditions, but not every pairwise contrast does — `none` vs `surface` is never significant, and agreement rate alone doesn't reach significance (p = .072). That patchiness is expected: a real manipulation nudges some measures more than others.
+- The Bradley-Terry duels put the three conditions close together (strengths ≈ .32–.36 of 1), with `counterfactual` beating `none` about 53% of the time head-to-head — a real edge, not a rout. A "weaker" condition still wins plenty of individual duels, because individual variability swamps the condition effect at the person level.
+- In the logistic regression, condition itself drops out as non-significant (p = .18–.75) once individual differences are in the model — `tech_disposition` (OR ≈ 1.42, p < .001), `need_for_cognition` (OR ≈ 0.78, p = .001), and `financial_literacy` (OR ≈ 0.85, p = .045) are what actually predict being a high AI follower.
+- The mixed-effects model's random intercept has ICC ≈ 0.42 — about 42% of the variance in trust sits at the respondent level, confirming the 10 observations per respondent aren't independent and justifying the clustered model over a naive OLS/ANOVA on all 6,780 rows.
 
 Run it with:
 

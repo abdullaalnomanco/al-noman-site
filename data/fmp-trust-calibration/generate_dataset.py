@@ -46,8 +46,10 @@ SCENARIOS = [
 TRUST_ITEMS = [f"t{i}" for i in range(1, 13)]  # Jian et al. (2000), 12 items, 1-7 Likert
 
 # How strongly each condition lets trust track whether the AI was
-# actually correct (higher = better calibration).
-CALIBRATION_STRENGTH = {"none": 0.15, "surface": 0.45, "counterfactual": 0.85}
+# actually correct (higher = better calibration). Kept close together —
+# a real explanation manipulation nudges calibration, it doesn't
+# override it.
+CALIBRATION_STRENGTH = {"none": 0.22, "surface": 0.38, "counterfactual": 0.56}
 
 
 def clamp(value, low, high):
@@ -68,7 +70,8 @@ def make_respondent(rng, respondent_id, condition):
         # Stable per-respondent trust disposition, applied to every one of
         # their 10 scenario judgments — this is the individual-differences
         # signal a random intercept (mixed-effects model) should recover.
-        "_trust_baseline_offset": rng.gauss(0, 0.55),
+        # People vary a lot more than any single manipulation moves them.
+        "_trust_baseline_offset": rng.gauss(0, 1.05),
     }
 
 
@@ -108,8 +111,16 @@ def generate_rows():
             # actually shifts toward the ground-truth correctness.
             confidence_pull = (scenario["ai_confidence"] - 50) / 50 * 1.5
             correctness_pull = (1.5 if scenario["ai_correct"] else -1.5) * strength
+            # Ambiguous scenarios (AI confidence near 50) are noisier
+            # moment-to-moment judgments than clear-cut ones — same
+            # respondent, same condition, but an "off day" call.
+            scenario_noise_sd = 0.45 + (50 - abs(scenario["ai_confidence"] - 50)) / 110
             base_trust = clamp(
-                4.0 + confidence_pull + correctness_pull + respondent["_trust_baseline_offset"] + rng.gauss(0, 0.4),
+                4.0
+                + confidence_pull
+                + correctness_pull
+                + respondent["_trust_baseline_offset"]
+                + rng.gauss(0, scenario_noise_sd),
                 1, 7,
             )
 

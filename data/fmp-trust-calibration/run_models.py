@@ -111,29 +111,42 @@ def fit_bradley_terry(win_counts, items, n_iter=500, tol=1e-10):
     return strength
 
 
-def run_bradley_terry(df):
+def run_bradley_terry(df, seed=2026):
     print("\n" + "=" * 72)
     print("2. BRADLEY-TERRY PAIRWISE-COMPARISON MODEL")
     print("=" * 72)
-    print("Contest = one scenario. The condition with the higher mean decision")
-    print("accuracy on that scenario 'wins' the contest against each other condition.")
+    print("Contest = one individual duel: a random respondent from condition A vs. a")
+    print("random respondent from condition B, on the same scenario. Whoever made the")
+    print("correct decision on that scenario wins the duel; both-correct/both-wrong")
+    print("ties split 0.5/0.5. This uses each person's actual outcome, not the group")
+    print("mean, so a 'weaker' condition still wins plenty of individual duels.")
 
     conditions = ["none", "surface", "counterfactual"]
-    per_scenario = df.groupby(["scenario_id", "condition"], observed=True)["decision_correct"].mean().unstack()
+    rng = np.random.default_rng(seed)
 
     win_counts = {}
-    print("\nPer-scenario accuracy by condition:")
-    for scenario_id, row in per_scenario.iterrows():
-        ranked = row.sort_values(ascending=False)
-        print(f"  scenario {scenario_id}: " + ", ".join(f"{c}={row[c]:.3f}" for c in conditions))
-        for i in range(len(conditions)):
-            for j in range(len(conditions)):
-                if i == j:
-                    continue
-                a, b = ranked.index[i], ranked.index[j]
-                # rank i beats rank j whenever it strictly outranks it
-                if list(ranked.index).index(a) < list(ranked.index).index(b):
-                    win_counts[(a, b)] = win_counts.get((a, b), 0) + 1
+    per_scenario_summary = []
+    for scenario_id, scen_df in df.groupby("scenario_id"):
+        by_cond = {
+            c: scen_df.loc[scen_df["condition"] == c, "decision_correct"].to_numpy()
+            for c in conditions
+        }
+        per_scenario_summary.append(
+            f"  scenario {scenario_id}: " + ", ".join(f"{c}={by_cond[c].mean():.3f}" for c in conditions)
+        )
+        for a, b in [("none", "surface"), ("none", "counterfactual"), ("surface", "counterfactual")]:
+            arr_a, arr_b = by_cond[a].copy(), by_cond[b].copy()
+            rng.shuffle(arr_a)
+            rng.shuffle(arr_b)
+            n = min(len(arr_a), len(arr_b))
+            a_win = np.sum(arr_a[:n] & ~arr_b[:n])
+            b_win = np.sum(arr_b[:n] & ~arr_a[:n])
+            tie = n - a_win - b_win
+            win_counts[(a, b)] = win_counts.get((a, b), 0) + a_win + 0.5 * tie
+            win_counts[(b, a)] = win_counts.get((b, a), 0) + b_win + 0.5 * tie
+
+    print("\nPer-scenario decision accuracy by condition (for reference):")
+    print("\n".join(per_scenario_summary))
 
     strength = fit_bradley_terry(win_counts, conditions)
     print("\nFitted Bradley-Terry strengths (sum to 1, higher = wins more often):")
