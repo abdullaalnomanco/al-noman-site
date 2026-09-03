@@ -10,6 +10,7 @@ This is **synthetic** data generated to pilot the analysis pipeline ahead of the
 - `trust_calibration_synthetic.csv` — the generated long-form dataset.
 - `run_models.py` — analysis pipeline (needs `numpy`, `pandas`, `scipy`, `statsmodels`): one-way ANOVA + Tukey-Kramer, a Bradley-Terry pairwise model, a logistic regression, and a mixed-effects model. See [Analysis](#analysis) below.
 - `model_results.txt` — saved output of the last `run_models.py` run.
+- **`REAL_DATA_SCHEMA.md`** — exactly what a real study export needs to contain for `run_models.py` to run on it unmodified once the live data exists, and `real_data_template.csv` — a blank file with just the required headers.
 
 Regenerate with:
 
@@ -35,10 +36,9 @@ python3 generate_dataset.py
 | `ai_recommendation`, `ai_confidence` | The AI's recommendation (`approve`/`deny`) and stated confidence (0–100) |
 | `ai_correct` | Pilot ground truth: whether the AI's recommendation was the "right" call for that scenario |
 | `t1`–`t12` | Jian et al. (2000) Trust in Automation scale items, 1–7 Likert |
-| `trust_composite` | Mean of `t1`–`t12` |
-| `agree_with_ai` | Whether the simulated respondent went along with the AI's recommendation |
+| `participant_decision` | The simulated respondent's raw decision (`approve`/`deny`) — the field a real export would carry |
+| `trust_composite`, `agree_with_ai`, `calibration_label` | Convenience columns derived from the raw fields above. `run_models.py` doesn't trust them — it recomputes `trust_composite` from `t1`–`t12` and `agree_with_ai` from `participant_decision` itself, exactly as it would for a real export (see `REAL_DATA_SCHEMA.md`) |
 | `response_time_sec` | Simulated response time |
-| `calibration_label` | Derived: `calibrated` / `over-trust` / `under-trust`, from `trust_composite` vs. `ai_correct` |
 
 ## Design notes
 
@@ -64,5 +64,8 @@ Run it with:
 
 ```
 pip install numpy pandas scipy statsmodels
-python3 run_models.py
+python3 run_models.py                      # synthetic pilot data (default)
+python3 run_models.py path/to/real_export.csv   # real data, once it exists
 ```
+
+The script doesn't hardcode the synthetic file's specifics — condition labels, item count, and which optional predictors exist are all read from whatever CSV you point it at. See `REAL_DATA_SCHEMA.md` for exactly what columns a real export needs.

@@ -1,11 +1,13 @@
-Loaded 6780 observations from 678 respondents.
+Loaded 6780 observations from 678 respondents (trust_calibration_synthetic.csv).
+Conditions: ['none', 'counterfactual', 'surface']
+Trust items: ['t1', 't2', 't3', 't4', 't5', 't6', 't7', 't8', 't9', 't10', 't11', 't12'] -> trust_composite recomputed as their mean.
 
 ========================================================================
 1. ONE-WAY ANOVA + TUKEY-KRAMER POST-HOC
 ========================================================================
 
 -- Mean trust composite (1-7) --
-   means: none=4.893  surface=4.972  counterfactual=5.136
+   means: none=4.893  counterfactual=5.136  surface=4.972
    F(2, 675) = 4.152, p = 0.01613
    Tukey-Kramer post-hoc:
           Multiple Comparison of Means - Tukey HSD, FWER=0.05     
@@ -18,12 +20,12 @@ Loaded 6780 observations from 678 respondents.
      -------------------------------------------------------------
 
 -- Rate of agreeing with the AI --
-   means: none=0.664  surface=0.672  counterfactual=0.707
+   means: none=0.664  counterfactual=0.707  surface=0.672
    F(2, 675) = 2.636, p = 0.0724
    (not significant at alpha=.05 -> no post-hoc run)
 
 -- Decision accuracy (agreed iff AI correct) --
-   means: none=0.660  surface=0.680  counterfactual=0.724
+   means: none=0.660  counterfactual=0.724  surface=0.680
    F(2, 675) = 8.410, p = 0.0002468
    Tukey-Kramer post-hoc:
           Multiple Comparison of Means - Tukey HSD, FWER=0.05     
@@ -36,7 +38,7 @@ Loaded 6780 observations from 678 respondents.
      -------------------------------------------------------------
 
 -- Mean response time (s) --
-   means: none=13.998  surface=14.258  counterfactual=14.027
+   means: none=13.998  counterfactual=14.027  surface=14.258
    F(2, 675) = 1.801, p = 0.166
    (not significant at alpha=.05 -> no post-hoc run)
 
@@ -50,16 +52,16 @@ ties split 0.5/0.5. This uses each person's actual outcome, not the group
 mean, so a 'weaker' condition still wins plenty of individual duels.
 
 Per-scenario decision accuracy by condition (for reference):
-  scenario 1: none=0.686, surface=0.735, counterfactual=0.810
-  scenario 2: none=0.730, surface=0.792, counterfactual=0.810
-  scenario 3: none=0.562, surface=0.633, counterfactual=0.628
-  scenario 4: none=0.681, surface=0.721, counterfactual=0.761
-  scenario 5: none=0.757, surface=0.823, counterfactual=0.801
-  scenario 6: none=0.460, surface=0.491, counterfactual=0.540
-  scenario 7: none=0.717, surface=0.664, counterfactual=0.748
-  scenario 8: none=0.522, surface=0.549, counterfactual=0.544
-  scenario 9: none=0.801, surface=0.743, counterfactual=0.858
-  scenario 10: none=0.686, surface=0.650, counterfactual=0.739
+  scenario 1: none=0.686, counterfactual=0.810, surface=0.735
+  scenario 2: none=0.730, counterfactual=0.810, surface=0.792
+  scenario 3: none=0.562, counterfactual=0.628, surface=0.633
+  scenario 4: none=0.681, counterfactual=0.761, surface=0.721
+  scenario 5: none=0.757, counterfactual=0.801, surface=0.823
+  scenario 6: none=0.460, counterfactual=0.540, surface=0.491
+  scenario 7: none=0.717, counterfactual=0.748, surface=0.664
+  scenario 8: none=0.522, counterfactual=0.544, surface=0.549
+  scenario 9: none=0.801, counterfactual=0.858, surface=0.743
+  scenario 10: none=0.686, counterfactual=0.739, surface=0.650
 
 Fitted Bradley-Terry strengths (sum to 1, higher = wins more often):
   counterfactual   strength = 0.3576
@@ -67,10 +69,10 @@ Fitted Bradley-Terry strengths (sum to 1, higher = wins more often):
   none             strength = 0.3148
 
 Implied head-to-head win probabilities P(row beats column):
-                            none         surface  counterfactual
-none                          --           0.490           0.468
-surface                    0.510              --           0.478
-counterfactual             0.532           0.522              --
+                            none  counterfactual         surface
+none                          --           0.468           0.490
+counterfactual             0.532              --           0.522
+surface                    0.510           0.478              --
 
 ========================================================================
 3. LOGISTIC REGRESSION — 'HIGH AI FOLLOWER'
@@ -84,15 +86,15 @@ Dep. Variable:       high_ai_follower   No. Observations:                  678
 Model:                          Logit   Df Residuals:                      672
 Method:                           MLE   Df Model:                            5
 Date:                Thu, 03 Sep 2026   Pseudo R-squ.:                 0.05414
-Time:                        10:14:05   Log-Likelihood:                -438.33
+Time:                        10:31:43   Log-Likelihood:                -438.33
 converged:                       True   LL-Null:                       -463.42
 Covariance Type:            nonrobust   LLR p-value:                 1.273e-09
 ==================================================================================================
                                      coef    std err          z      P>|z|      [0.025      0.975]
 --------------------------------------------------------------------------------------------------
 Intercept                         -0.3692      0.498     -0.742      0.458      -1.345       0.606
-C(condition)[T.surface]           -0.0622      0.199     -0.313      0.754      -0.452       0.327
 C(condition)[T.counterfactual]     0.2646      0.196      1.349      0.177      -0.120       0.649
+C(condition)[T.surface]           -0.0622      0.199     -0.313      0.754      -0.452       0.327
 financial_literacy                -0.1630      0.081     -2.006      0.045      -0.322      -0.004
 need_for_cognition                -0.2454      0.072     -3.404      0.001      -0.387      -0.104
 tech_disposition                   0.3507      0.066      5.331      0.000       0.222       0.480
@@ -101,8 +103,8 @@ tech_disposition                   0.3507      0.066      5.331      0.000      
 Odds ratios (exp(coef)) with 95% CI:
                                    OR  OR_2.5%  OR_97.5%      p
 Intercept                       0.691    0.261     1.834  0.458
-C(condition)[T.surface]         0.940    0.637     1.387  0.754
 C(condition)[T.counterfactual]  1.303    0.887     1.914  0.177
+C(condition)[T.surface]         0.940    0.637     1.387  0.754
 financial_literacy              0.850    0.724     0.996  0.045
 need_for_cognition              0.782    0.679     0.901  0.001
 tech_disposition                1.420    1.248     1.616  0.000
@@ -126,8 +128,8 @@ Mean group size:       10.0
                                Coef. Std.Err.   z    P>|z| [0.025 0.975]
 ------------------------------------------------------------------------
 Intercept                      4.893    0.061 80.370 0.000  4.773  5.012
-C(condition)[T.surface]        0.080    0.086  0.926 0.355 -0.089  0.248
 C(condition)[T.counterfactual] 0.243    0.086  2.826 0.005  0.075  0.412
+C(condition)[T.surface]        0.080    0.086  0.926 0.355 -0.089  0.248
 Group Var                      0.735    0.048                           
 ========================================================================
 

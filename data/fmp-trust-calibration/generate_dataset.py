@@ -138,6 +138,8 @@ def generate_rows():
             )
             agree_prob = clamp((trust_composite - 1) / 6 + trait_pull, 0.02, 0.98)
             agree_with_ai = rng.random() < agree_prob
+            other_decision = "deny" if scenario["ai_recommendation"] == "approve" else "approve"
+            participant_decision = scenario["ai_recommendation"] if agree_with_ai else other_decision
 
             respondent_public = {k: v for k, v in respondent.items() if not k.startswith("_")}
             row = {
@@ -149,6 +151,11 @@ def generate_rows():
                 "ai_confidence": scenario["ai_confidence"],
                 "ai_correct": scenario["ai_correct"],
                 **items,
+                # participant_decision is the raw field a real export would
+                # carry; agree_with_ai/decision_correct/calibration_label
+                # below are conveniences derived from it (run_models.py
+                # re-derives them itself, the same way it would for real data).
+                "participant_decision": participant_decision,
                 "trust_composite": trust_composite,
                 "agree_with_ai": agree_with_ai,
                 "response_time_sec": round(clamp(rng.gauss(14, 5), 3, 45), 1),

@@ -16,10 +16,24 @@ live study:
      observations).
 
 Usage:
-    python3 run_models.py
+    python3 run_models.py [path/to/real_export.csv]
+
+Defaults to the synthetic pilot file, but takes any CSV built to the
+schema documented in REAL_DATA_SCHEMA.md — real study data plugs in
+with no code changes. Everything the models need is *re-derived* here
+from raw fields rather than trusted as pre-computed:
+  - agreement/accuracy come from comparing participant_decision to
+    ai_recommendation and ai_correct, not from a precomputed flag.
+  - trust_composite is the mean of whatever t1..tN item columns are
+    present, not taken as a given pre-averaged number.
+  - condition categories and the reference level are inferred from the
+    data itself, not hardcoded to the synthetic label set.
 
 Requires numpy / pandas / scipy / statsmodels.
 """
+import re
+import sys
+
 import numpy as np
 import pandas as pd
 from scipy import stats
@@ -28,47 +42,90 @@ import statsmodels.formula.api as smf
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
 
 DATA_PATH = "trust_calibration_synthetic.csv"
+TRUST_ITEM_PATTERN = re.compile(r"^t\d+$")
+# Preferred reference/baseline level for the condition factor, if present
+# in the data (e.g. the "no explanation" arm). Falls back to whichever
+# condition sorts first when this isn't found.
+PREFERRED_BASELINE_CONDITION = "none"
 
 
-def load_data():
-    df = pd.read_csv(DATA_PATH)
-    df["agree_with_ai"] = df["agree_with_ai"].astype(str).str.lower() == "true"
-    df["ai_correct"] = df["ai_correct"].astype(str).str.lower() == "true"
-    df["condition"] = pd.Categorical(df["condition"], categories=["none", "surface", "counterfactual"])
+def _to_bool(series):
+    if series.dtype == bool:
+        return series
+    return series.astype(str).str.strip().str.lower().isin({"true", "1", "yes", "t"})
+
+
+def load_data(path=DATA_PATH):
+    df = pd.read_csv(path)
+
+    trust_items = sorted(
+        (c for c in df.columns if TRUST_ITEM_PATTERN.match(c)),
+        key=lambda c: int(c[1:]),
+    )
+    if not trust_items:
+        raise ValueError(
+            "No raw trust item columns found (expected t1, t2, ... — one per scale "
+            "item). A pre-averaged composite alone isn't enough to check the number."
+        )
+    # Always recompute from the raw items, even if a trust_composite column
+    # is already present, so the figure is checkable rather than assumed.
+    df["trust_composite"] = df[trust_items].mean(axis=1).round(2)
+
+    df["ai_correct"] = _to_bool(df["ai_correct"])
+
+    if "participant_decision" in df.columns:
+        df["agree_with_ai"] = df["participant_decision"].astype(str).str.strip().str.lower() == \
+            df["ai_recommendation"].astype(str).str.strip().str.lower()
+    elif "agree_with_ai" in df.columns:
+        df["agree_with_ai"] = _to_bool(df["agree_with_ai"])
+    else:
+        raise ValueError("Need either a participant_decision column or a precomputed agree_with_ai column.")
+
+    conditions = sorted(df["condition"].dropna().unique().tolist())
+    if PREFERRED_BASELINE_CONDITION in conditions:
+        conditions.remove(PREFERRED_BASELINE_CONDITION)
+        conditions.insert(0, PREFERRED_BASELINE_CONDITION)
+    df["condition"] = pd.Categorical(df["condition"], categories=conditions)
+
     # "Good decision": followed the AI when it was right, didn't when it was wrong.
     df["decision_correct"] = df["agree_with_ai"] == df["ai_correct"]
-    return df
+    return df, conditions, trust_items
 
 
 # ---------------------------------------------------------------------
 # 1. One-way ANOVA + Tukey-Kramer
 # ---------------------------------------------------------------------
-def run_anova(df):
+def run_anova(df, conditions):
     print("\n" + "=" * 72)
     print("1. ONE-WAY ANOVA + TUKEY-KRAMER POST-HOC")
     print("=" * 72)
 
-    per_resp = df.groupby(["respondent_id", "condition"], observed=True).agg(
-        trust_mean=("trust_composite", "mean"),
-        agree_rate=("agree_with_ai", "mean"),
-        accuracy=("decision_correct", "mean"),
-        rt_mean=("response_time_sec", "mean"),
-    ).reset_index()
-
+    agg = {
+        "trust_mean": ("trust_composite", "mean"),
+        "agree_rate": ("agree_with_ai", "mean"),
+        "accuracy": ("decision_correct", "mean"),
+    }
     outcomes = {
         "trust_mean": "Mean trust composite (1-7)",
         "agree_rate": "Rate of agreeing with the AI",
         "accuracy": "Decision accuracy (agreed iff AI correct)",
-        "rt_mean": "Mean response time (s)",
     }
+    if "response_time_sec" in df.columns:
+        agg["rt_mean"] = ("response_time_sec", "mean")
+        outcomes["rt_mean"] = "Mean response time (s)"
+    else:
+        print("Note: response_time_sec not in this export — skipping that outcome.")
+
+    per_resp = df.groupby(["respondent_id", "condition"], observed=True).agg(**agg).reset_index()
+    k = len(conditions)
 
     for col, label in outcomes.items():
-        groups = [per_resp.loc[per_resp["condition"] == c, col].values for c in ["none", "surface", "counterfactual"]]
+        groups = [per_resp.loc[per_resp["condition"] == c, col].values for c in conditions]
         f_stat, p_val = stats.f_oneway(*groups)
-        means = {c: g.mean() for c, g in zip(["none", "surface", "counterfactual"], groups)}
+        means = {c: g.mean() for c, g in zip(conditions, groups)}
         print(f"\n-- {label} --")
-        print(f"   means: none={means['none']:.3f}  surface={means['surface']:.3f}  counterfactual={means['counterfactual']:.3f}")
-        print(f"   F(2, {len(per_resp) - 3}) = {f_stat:.3f}, p = {p_val:.4g}")
+        print("   means: " + "  ".join(f"{c}={means[c]:.3f}" for c in conditions))
+        print(f"   F({k - 1}, {len(per_resp) - k}) = {f_stat:.3f}, p = {p_val:.4g}")
         if p_val < 0.05:
             tukey = pairwise_tukeyhsd(per_resp[col], per_resp["condition"], alpha=0.05)
             print("   Tukey-Kramer post-hoc:")
@@ -111,7 +168,7 @@ def fit_bradley_terry(win_counts, items, n_iter=500, tol=1e-10):
     return strength
 
 
-def run_bradley_terry(df, seed=2026):
+def run_bradley_terry(df, conditions, seed=2026):
     print("\n" + "=" * 72)
     print("2. BRADLEY-TERRY PAIRWISE-COMPARISON MODEL")
     print("=" * 72)
@@ -121,8 +178,8 @@ def run_bradley_terry(df, seed=2026):
     print("ties split 0.5/0.5. This uses each person's actual outcome, not the group")
     print("mean, so a 'weaker' condition still wins plenty of individual duels.")
 
-    conditions = ["none", "surface", "counterfactual"]
     rng = np.random.default_rng(seed)
+    pairs = [(a, b) for i, a in enumerate(conditions) for b in conditions[i + 1:]]
 
     win_counts = {}
     per_scenario_summary = []
@@ -134,7 +191,7 @@ def run_bradley_terry(df, seed=2026):
         per_scenario_summary.append(
             f"  scenario {scenario_id}: " + ", ".join(f"{c}={by_cond[c].mean():.3f}" for c in conditions)
         )
-        for a, b in [("none", "surface"), ("none", "counterfactual"), ("surface", "counterfactual")]:
+        for a, b in pairs:
             arr_a, arr_b = by_cond[a].copy(), by_cond[b].copy()
             rng.shuffle(arr_a)
             rng.shuffle(arr_b)
@@ -172,28 +229,31 @@ def run_bradley_terry(df, seed=2026):
 # ---------------------------------------------------------------------
 # 3. Logistic regression: "high AI follower"
 # ---------------------------------------------------------------------
+INDIVIDUAL_DIFFERENCE_COLUMNS = ["financial_literacy", "need_for_cognition", "tech_disposition"]
+
+
 def run_logistic(df):
     print("\n" + "=" * 72)
     print("3. LOGISTIC REGRESSION — 'HIGH AI FOLLOWER'")
     print("=" * 72)
 
-    per_resp = df.groupby("respondent_id", observed=True).agg(
-        agree_rate=("agree_with_ai", "mean"),
-        financial_literacy=("financial_literacy", "first"),
-        need_for_cognition=("need_for_cognition", "first"),
-        tech_disposition=("tech_disposition", "first"),
-        condition=("condition", "first"),
-    ).reset_index()
+    predictors = [c for c in INDIVIDUAL_DIFFERENCE_COLUMNS if c in df.columns]
+    missing = [c for c in INDIVIDUAL_DIFFERENCE_COLUMNS if c not in df.columns]
+    if missing:
+        print(f"Note: {', '.join(missing)} not in this export — dropped from the model, "
+              f"kept: {', '.join(predictors) or '(none)'}.")
+
+    agg = {"agree_rate": ("agree_with_ai", "mean"), "condition": ("condition", "first")}
+    agg.update({c: (c, "first") for c in predictors})
+    per_resp = df.groupby("respondent_id", observed=True).agg(**agg).reset_index()
 
     median_rate = per_resp["agree_rate"].median()
     per_resp["high_ai_follower"] = (per_resp["agree_rate"] > median_rate).astype(int)
     print(f"Median agreement rate = {median_rate:.3f} (split point for the binary DV)")
     print(f"high_ai_follower = 1 for {per_resp['high_ai_follower'].sum()} / {len(per_resp)} respondents")
 
-    model = smf.logit(
-        "high_ai_follower ~ financial_literacy + need_for_cognition + tech_disposition + C(condition)",
-        data=per_resp,
-    ).fit(disp=False)
+    formula = "high_ai_follower ~ " + " + ".join(predictors + ["C(condition)"])
+    model = smf.logit(formula, data=per_resp).fit(disp=False)
 
     print("\n" + str(model.summary()))
 
@@ -240,10 +300,13 @@ def run_mixed_effects(df):
 
 
 if __name__ == "__main__":
-    df = load_data()
-    print(f"Loaded {len(df)} observations from {df['respondent_id'].nunique()} respondents.")
+    path = sys.argv[1] if len(sys.argv) > 1 else DATA_PATH
+    df, conditions, trust_items = load_data(path)
+    print(f"Loaded {len(df)} observations from {df['respondent_id'].nunique()} respondents ({path}).")
+    print(f"Conditions: {conditions}")
+    print(f"Trust items: {trust_items} -> trust_composite recomputed as their mean.")
 
-    run_anova(df)
-    run_bradley_terry(df)
+    run_anova(df, conditions)
+    run_bradley_terry(df, conditions)
     run_logistic(df)
     run_mixed_effects(df)
